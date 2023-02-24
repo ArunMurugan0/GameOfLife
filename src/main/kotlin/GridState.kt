@@ -1,4 +1,4 @@
-data class GridState(val liveCells: List<Cell>) {
+data class GridState(val liveCells: Set<Cell>) {
     fun isCellAlive(cell: Cell)
         = liveCells.firstOrNull { it ==  cell} != null
 
