@@ -15,16 +15,19 @@ class GameOfLifeSimulator {
         ).flatten().toSet()
     }
 
-    private fun isCellAliveInNextGen(previousGridState: GridState, cell: Cell): Boolean {
-        val aliveNeighbourCount = previousGridState.getAliveNeighbourCountOf(cell)
-        if (previousGridState.isCellAlive(cell)) {
-            if (aliveNeighbourCount == 2 || aliveNeighbourCount == 3) {
-                return true
-            }
+    private fun isAliveCellAliveInNextGen(aliveNeighbourCount: Int): Boolean {
+        return aliveNeighbourCount == 2 || aliveNeighbourCount == 3
+    }
 
-            return false
-        }
-
+    private fun isDeadCellAliveInNextGen(aliveNeighbourCount: Int): Boolean {
         return aliveNeighbourCount == 3
     }
+
+    private fun isCellAliveInNextGen(previousGridState: GridState, cell: Cell) =
+        previousGridState.getAliveNeighbourCountOf(cell).let {
+            when (previousGridState.isCellAlive(cell)) {
+                true -> isAliveCellAliveInNextGen(aliveNeighbourCount = it)
+                false -> isDeadCellAliveInNextGen(aliveNeighbourCount = it)
+            }
+        }
 }
