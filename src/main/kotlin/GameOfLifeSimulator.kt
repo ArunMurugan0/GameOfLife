@@ -1,14 +1,11 @@
 class GameOfLifeSimulator {
     fun getNextState(previousGridState: GridState): GridState {
-        val prevGenLiveCells = previousGridState.liveCells
-
-        val candidateNextGenLiveCells =
-            getAllCandidateForNextGenAliveCells(prevGenLiveCells)
-
-        val nextGenLiveCells = candidateNextGenLiveCells
-            .filter { isCellAliveInNextGen(previousGridState, it) }.toSet()
-
-        return GridState(liveCells = nextGenLiveCells)
+        return GridState(
+            liveCells =
+            getAllCandidateForNextGenAliveCells(previousGridState.liveCells)
+                .filter { isCellAliveInNextGen(previousGridState, it) }
+                .toSet()
+        )
     }
 
     private fun getAllCandidateForNextGenAliveCells(prevGenLiveCells: Set<Cell>): Set<Cell> {
