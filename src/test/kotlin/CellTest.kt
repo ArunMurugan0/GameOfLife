@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import java.math.BigInteger
 
 class CellTest {
 
@@ -23,5 +24,13 @@ class CellTest {
 
         assertEquals(expectedNeighbourCells.size, actualNeighbourCells.size)
         assertTrue(expectedNeighbourCells.containsAll(actualNeighbourCells))
+    }
+
+    @Test
+    fun `it should support constructors with long and big integer for the coordinates`() {
+        val cellOne = Cell(12, 10)
+        val cellTwo = Cell(BigInteger.valueOf(12), BigInteger.valueOf(10))
+
+        assertEquals(cellOne, cellTwo)
     }
 }

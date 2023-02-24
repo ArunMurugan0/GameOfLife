@@ -1,14 +1,19 @@
-data class Cell(val x: Long, val y: Long) {
+import java.math.BigInteger
+import java.math.BigInteger.ONE
+
+data class Cell(val x: BigInteger, val y: BigInteger) {
+    constructor(x: Long, y: Long): this(BigInteger.valueOf(x), BigInteger.valueOf(y))
+
     fun getAllNeighbourCells(): List<Cell> {
         return listOf(
-            Cell(x - 1, y),
-            Cell(x, y - 1),
-            Cell(x + 1, y),
-            Cell(x, y + 1),
-            Cell(x + 1, y + 1),
-            Cell(x - 1, y - 1),
-            Cell(x + 1, y - 1),
-            Cell(x - 1, y + 1),
+            Cell(x - ONE, y),
+            Cell(x, y - ONE),
+            Cell(x + ONE, y),
+            Cell(x, y + ONE),
+            Cell(x + ONE, y + ONE),
+            Cell(x - ONE, y - ONE),
+            Cell(x + ONE, y - ONE),
+            Cell(x - ONE, y + ONE),
         )
     }
 }
