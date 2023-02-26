@@ -6,15 +6,14 @@ import kotlinx.coroutines.runBlocking
 class ConcurrentGameOfLifeSimulator : GameOfLifeSimulator() {
     override fun getNextState(previousGridState: GridState): GridState {
         return GridState(
-            liveCells = runBlocking { runTask(previousGridState, previousGridState.liveCells).toList() }
+            liveCells = runBlocking { runTask(previousGridState, previousGridState.liveCells).toSet().toList() }
         )
     }
 
-    private suspend fun runTask(state: GridState, list: List<Cell>): Set<Cell> = coroutineScope {
-        if (list.size < 100) {
+    private suspend fun runTask(state: GridState, list: List<Cell>): List<Cell> = coroutineScope {
+        if (list.size < 500) {
             return@coroutineScope getAllCandidateForNextGenAliveCells(prevGenLiveCells = list)
                 .filter { isCellAliveInNextGen(state, it) }
-                .toSet()
         }
 
         val m = list.size / 2
@@ -30,5 +29,5 @@ class ConcurrentGameOfLifeSimulator : GameOfLifeSimulator() {
         return@coroutineScope merge(coroutineOne.await(), coroutineTwo.await())
     }
 
-    private fun merge(a: Set<Cell>, b: Set<Cell>) = a.plus(b)
+    private fun merge(a: List<Cell>, b: List<Cell>) = a.plus(b)
 }
