@@ -1,4 +1,4 @@
-data class GridState(val liveCells: Set<Cell>) {
+data class GridState(val liveCells: List<Cell>) {
     fun isCellAlive(cell: Cell)
         = liveCells.contains(cell)
 

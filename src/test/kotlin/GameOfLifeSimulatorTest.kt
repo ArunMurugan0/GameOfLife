@@ -6,17 +6,17 @@ class GameOfLifeSimulatorTest {
     @Test
     fun `alive cell should die if it has less than 2 alive neighbours`(){
         val initialGridState = GridState(
-            liveCells = setOf(
+            liveCells = listOf(
                 Cell(1, 1),
                 Cell(0, 2),
                 Cell(2, 2)
             )
         )
 
-        val actualGridState = GameOfLifeSimulator().getNextState(initialGridState)
+        val actualGridState = NonConcurrentGameOfLifeSimulator().getNextState(initialGridState)
 
         val expectedGridState = GridState(
-            liveCells = setOf(Cell(1, 1), Cell(1, 2))
+            liveCells = listOf(Cell(1, 1), Cell(1, 2))
         )
         assertEquals(expectedGridState, actualGridState)
     }
@@ -24,7 +24,7 @@ class GameOfLifeSimulatorTest {
     @Test
     fun `alive cell should die if it has more than 3 neighbours`(){
         val initialGridState = GridState(
-            liveCells = setOf(
+            liveCells = listOf(
                 Cell(1, 1),
                 Cell(1, 2),
                 Cell(0, 2),
@@ -33,26 +33,27 @@ class GameOfLifeSimulatorTest {
             )
         )
 
-        val actualGridState = GameOfLifeSimulator().getNextState(initialGridState)
+        val actualGridState = NonConcurrentGameOfLifeSimulator().getNextState(initialGridState)
 
         val expectedGridState = GridState(
-            liveCells = setOf(Cell(2, 2), Cell(1, 2), Cell(0, 2), Cell(1, 3))
+            liveCells = listOf(Cell(2, 2), Cell(1, 2), Cell(0, 2), Cell(1, 3))
         )
         assertEquals(expectedGridState, actualGridState)
     }
 
     @Test
     fun `dead cell should become alive if has 3 alive neighbours`() {
-        val gridState = GridState(liveCells = setOf(
+        val gridState = GridState(liveCells = listOf(
             Cell(0, 2),
             Cell(2, 2),
             Cell(1, 0)
-        ))
+        )
+        )
 
-        val actualGridState = GameOfLifeSimulator().getNextState(gridState)
+        val actualGridState = NonConcurrentGameOfLifeSimulator().getNextState(gridState)
 
         val expectedGridState = GridState(
-            liveCells = setOf(
+            liveCells = listOf(
                 Cell(1, 1)
             )
         )
