@@ -11,7 +11,7 @@ class ConcurrentGameOfLifeSimulator : GameOfLifeSimulator() {
     }
 
     private suspend fun runTask(state: GridState, list: List<Cell>): Set<Cell> = coroutineScope {
-        if (list.size < 500) {
+        if (list.size < 100) {
             return@coroutineScope getAllCandidateForNextGenAliveCells(prevGenLiveCells = list)
                 .filter { isCellAliveInNextGen(state, it) }
                 .toSet()
